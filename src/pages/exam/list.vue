@@ -73,7 +73,7 @@
 
             <el-table-column label="是否归档" align="center" width="150">
                 <template #default="{ row }">
-                    {{ row.is_archived }}
+                    {{ row.is_archived ? '是' : '否' }}
                 </template>
             </el-table-column>
 

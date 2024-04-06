@@ -159,9 +159,9 @@
           <el-form-item label="选项" prop="choice_text">
             <el-input v-model="form.choice_text" placeholder="答案依据ABCD顺序|分隔如 日本|澳大利亚|法国|韩国"></el-input>
           </el-form-item>
-          <el-form-item label="图片" prop="question_image_data">
+          <!-- <el-form-item label="图片" prop="question_image_data">
             <el-input v-model="form.question_image_data" placeholder="null"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="难易" prop="difficulty_level">
             <el-select v-model="form.difficulty_level" placeholder="难易">
               <el-option v-for="item in difficulty_levels" :key="item" :label="item" :value="item">

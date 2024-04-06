@@ -123,17 +123,18 @@
 
     <FormDrawer ref="formDrawerRef" :title="drawerTitle" @submit="handleSubmit">
       <el-form :model="form" ref="formRef" :rules="rules" label-width="80px" :inline="false">
-        <el-form-item label="学生号" prop="stu_id">
-          <el-input v-model="form.stu_id" placeholder="用户名"></el-input>
-        </el-form-item>
+
         <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="设置密码" prop="password">
+        <el-form-item label="学号" prop="stu_id">
+          <el-input v-model="form.stu_id" placeholder="用户名"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
           <!-- <el-input v-model="form.password" placeholder="密码"></el-input> -->
           <el-input v-model="form.password" placeholder="密码" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="电话" prop="tel">
+        <el-form-item label="手机号" prop="tel">
           <el-input v-model="form.tel"></el-input>
         </el-form-item>
         <el-form-item label="身份证号" prop="id_card">
@@ -143,7 +144,7 @@
           <el-input v-model="form.email"></el-input>
         </el-form-item>
 
-        <el-form-item label="角色" prop="role">
+        <el-form-item label="身份" prop="role">
           <el-select v-model="form.role" placeholder="选择所属角色">
             <el-option v-for="item in roles" :key="item" :label="item" :value="item">
             </el-option>
@@ -240,7 +241,51 @@ const form = reactive({
   create_time: "",
   last_login: ""
 })
-const rules = {}
+const rules = {
+  stu_id: [{
+    required: true,
+    message: '不能为空',
+    trigger: 'blur'
+  }],
+  name: [{
+    required: true,
+    message: '不能为空',
+    trigger: 'blur'
+  }],
+  password: [{
+    required: true,
+    message: '不能为空',
+    trigger: 'blur'
+  }],
+  tel: [{
+    required: true,
+    message: '不能为空',
+    trigger: 'blur'
+  }, {
+    pattern: /^[0-9|-]{5,20}$/,
+    message: '请输入有效的电话号码',
+    trigger: 'blur'
+  }],
+  id_card: [{
+    required: true,
+    message: '不能为空',
+    trigger: 'blur'
+  }, {
+    pattern: /^[0-9|x|X]{5,20}$/,
+    message: '请输入有效的身份证号码',
+    trigger: 'blur'
+  }],
+  email: [{
+    required: true,
+    message: '不能为空',
+    trigger: 'blur'
+  }, {
+    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    message: '请输入有效的邮箱地址',
+    trigger: 'blur'
+  }]
+}
+
 const editId = ref(0)
 const drawerTitle = computed(() => editId.value ? "修改" : "新增")
 
@@ -250,17 +295,40 @@ const handleSubmit = () => {
 
     formDrawerRef.value.showLoading()
 
-    const fun = editId.value ? updateUser(editId.value, form) : createUser(form)
+    const fun = editId.value
+    if (fun != 0) {
+      updateUser(editId.value, form)
+        .then(res => {
+          toast(drawerTitle.value + "成功")
+          // 修改刷新当前页，新增刷新第一页
+          getData(editId.value ? false : 1)
+          formDrawerRef.value.close()
+        })
+        .finally(() => {
+          formDrawerRef.value.hideLoading()
+        })
+    } else {
+      createUser(form)
+        .then(res => {
+          console.log(res)
+          if (res.err_code == 1000) {
+            toast(res.msg, "error")
+            // 修改刷新当前页，新增刷新第一页
+            getData(editId.value ? false : 1)
+            formDrawerRef.value.close()
+          } else {
+            toast(drawerTitle.value + "成功")
+            // 修改刷新当前页，新增刷新第一页
+            getData(editId.value ? false : 1)
+            formDrawerRef.value.close()
+          }
+        })
+        .finally(() => {
+          formDrawerRef.value.hideLoading()
+        })
+    }
 
-    fun.then(res => {
-      toast(drawerTitle.value + "成功")
-      // 修改刷新当前页，新增刷新第一页
-      getData(editId.value ? false : 1)
-      formDrawerRef.value.close()
-    })
-      .finally(() => {
-        formDrawerRef.value.hideLoading()
-      })
+
 
   })
 }

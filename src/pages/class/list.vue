@@ -79,12 +79,11 @@
                 <el-form-item label="班级用户" prop="groups">
                     <el-select v-model="formuser.users" multiple>
                         <el-option v-for="item in formuser.users" :key="item.stu_id" :label="item.name" :value="item">
+                        <!-- <el-option v-for="(option, index) in formuser.users" :key="option.stu_id" :label="option.stu_id" :value="option.stu_id">
+                            {{ option.name }} -->
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item label="班级用户" width="200" prop="groups" v-if="drawerTitle === '修改'">
-                    <el-input v-model="formuser.users" placeholder=""></el-input>
-                </el-form-item> -->
             </el-form>
             <el-input v-model="new_stu_input_item" style="width: 400px" placeholder="stu_id、手机号、身份证号、邮箱"></el-input>
             <el-button type="text" @click="addUserToGroup">添加新用户</el-button>
