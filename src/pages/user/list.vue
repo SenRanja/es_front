@@ -55,9 +55,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="权限" align="center" width="70">
+      <el-table-column label="身份" align="center" width="70">
         <template #default="{ row }">
-          {{ row.role }}
+          {{ row.role === 'stu' ? '学生' : row.role === 'tea' ? '教师' : row.role === 'admin' ? '管理员' : '' }}
         </template>
       </el-table-column>
 
