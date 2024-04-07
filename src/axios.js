@@ -10,7 +10,7 @@ const service = axios.create({
     // 打包，不注释
     withCredentials: true
 });
-wanghong
+ 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
