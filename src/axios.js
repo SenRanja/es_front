@@ -7,6 +7,7 @@ const service = axios.create({
     // 如果此处不使用 vite 配置的proxy代理，需要配置 withCredentials
     // baseURL: "http://127.0.0.1:8000/",
     baseURL: "",
+    
     // 打包，不注释
     withCredentials: true
 });
