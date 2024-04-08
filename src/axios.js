@@ -6,12 +6,12 @@ const service = axios.create({
     // baseURL: "/api",  // 若此处使用 /api 则使用到vite.config.js中的proxy代理
     // 如果此处不使用 vite 配置的proxy代理，需要配置 withCredentials
     // baseURL: "http://127.0.0.1:8000/",
-    baseURL: "",
+    baseURL:'',
     
     // 打包，不注释
     withCredentials: true
 });
-
+ 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
