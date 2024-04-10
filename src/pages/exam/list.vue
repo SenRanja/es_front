@@ -181,9 +181,9 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="修改班级" align="center" width="200" v-if="drawerTitle ==='修改'">
+                <el-form-item label="参考班级" align="center" width="200">
                     <!-- <div>{{ form.class_groups }}</div> -->
-                    <el-input v-model="form.class_groups" placeholder=""></el-input>
+                    <el-input v-model="form.class_groups" placeholder="请输入班级,逗号做班级分割"></el-input>
                 </el-form-item>
 
                 <el-form-item label="归档" v-if="drawerTitle ==='修改'">
