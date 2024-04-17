@@ -24,7 +24,7 @@ const props = defineProps({
   title: String,
   size: {
     type: String,
-    default: '45%'
+    default: '60%'
   },
   destroyeOnClose: {
     type: Boolean,

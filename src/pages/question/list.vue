@@ -52,11 +52,11 @@
 
 
 
-      <el-table-column label="题类" align="center" width="120">
+      <!-- <el-table-column label="题类" align="center" width="120">
         <template #default="{ row }">
           {{ row.question_name }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="题目" align="center" width="200">
         <template #default="{ row }">
@@ -90,11 +90,11 @@
       </el-table-column>
 
 
-      <el-table-column label="描述" align="center" width="200">
+      <!-- <el-table-column label="描述" align="center" width="200">
         <template #default="{ row }">
           {{ row.description }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
 
       <el-table-column label="题库" align="center" width="150">
@@ -152,40 +152,56 @@
 
     <FormDrawer ref="formDrawerRef" :title="drawerTitle" @submit="handleSubmit">
       <el-form :model="form" ref="formRef" :rules="rules" label-width="80px" :inline="false">
-        <el-form-item label="题目类型" prop="question_type">
-          <el-select v-model="form.question_type" placeholder="题目类型">
+        <el-form-item label="试题类型" prop="question_type">
+          <el-select v-model="form.question_type" placeholder="试题类型">
             <el-option v-for="item in question_types" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="答案" prop="reference_answer">
-          <el-input v-model="form.reference_answer"></el-input>
+
+        <el-form-item label="参考答案" prop="reference_answer">
+          <!-- <el-input v-model="form.reference_answer" :placeholder="placeholder"></el-input> -->
+
+          <template v-if="form.question_type === '判断'">
+            <el-radio-group v-model="form.reference_answer">
+              <el-radio label="正确">正确</el-radio>
+              <el-radio label="错误">错误</el-radio>
+            </el-radio-group>
+          </template>
+          <template v-else>
+            <el-input v-model="form.reference_answer" :placeholder="placeholder"></el-input>
+          </template>
         </el-form-item>
-        <el-form-item label="题类" prop="question_name">
+
+        <!-- <el-form-item label="试题名称" prop="question_name">
           <el-input v-model="form.question_name" placeholder="题类"></el-input>
-        </el-form-item>
-        <el-form-item label="题目" prop="question_text">
+        </el-form-item> -->
+
+        <el-form-item label="试题问题" prop="question_text">
           <el-input v-model="form.question_text"></el-input>
         </el-form-item>
-        <el-form-item label="选项" prop="choice_text">
+        <el-form-item label="选项配置" prop="choice_text" label-position="left" style="white-space: nowrap;"
+          v-if="form.question_type === '单选' || form.question_type === '多选'">
+
           <el-input v-model="form.choice_text" placeholder="答案依据ABCD顺序|分隔如 日本|澳大利亚|法国|韩国"></el-input>
+          <!-- style="width: 300px;" -->
         </el-form-item>
-        <!-- <el-form-item label="图片" prop="question_image_data">
+        <!-- <el-form-item label="题目图片" prop="question_image_data">
             <el-input v-model="form.question_image_data" placeholder="null"></el-input>
           </el-form-item> -->
-        <el-form-item label="难易" prop="difficulty_level">
+        <el-form-item label="难易程度" prop="difficulty_level">
           <el-select v-model="form.difficulty_level" placeholder="难易">
             <el-option v-for="item in difficulty_levels" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="描述" prop="description">
+        <!-- <el-form-item label="出题描述" prop="description">
           <el-input v-model="form.description"></el-input>
-        </el-form-item>
-        <el-form-item label="题库" prop="question_database">
+        </el-form-item> -->
+        <el-form-item label="题库名称" prop="question_database">
           <el-input v-model="form.question_database"></el-input>
         </el-form-item>
-        <el-form-item label="作者" prop="author">
+        <el-form-item label="出题人" prop="author">
           <el-input v-model="form.author"></el-input>
         </el-form-item>
 
@@ -233,6 +249,26 @@ difficulty_levels.value = [
 
 const question_types = ref([])
 question_types.value = ['单选', '多选', '判断', '填空', '简答', '论述']
+
+
+const placeholder = computed(() => {
+  switch (form.question_type) {
+    case '单选':
+      return '单选题参考答案示例：A';
+    case '多选':
+      return '多选参考答案示例：AB 或 ABCD';
+    case '判断':
+      return '判断题参考答案示例： 正确 或 错误';
+    case '填空':
+      return '请输入判断题参考答案';
+    case '简答':
+      return '请输入简答题参考答案';
+    case '论述':
+      return '请输入论述题参考答案';
+    default:
+      return '请输入参考答案';
+  }
+});
 
 const tableData = ref([])
 const loading = ref(false)
@@ -290,7 +326,33 @@ const form = reactive({
   question_database: "",
   author: ""
 })
-const rules = {}
+const rules = {
+  question_type:[{
+      required: true,
+      message: '试题类型不能为空',
+      trigger: 'blur'
+  }],
+  reference_answer:[{
+      required: true,
+      message: '参考答案不能为空',
+      trigger: 'blur'
+  }],
+  question_text:[{
+      required: true,
+      message: '试题问题不能为空',
+      trigger: 'blur'
+  }],
+  difficulty_level:[{
+      required: true,
+      message: '难易程度不能为空',
+      trigger: 'blur'
+  }],
+  question_database:[{
+      required: true,
+      message: '题库名称不能为空',
+      trigger: 'blur'
+  }],
+}
 const editId = ref(0)
 const drawerTitle = computed(() => editId.value ? "修改" : "新增")
 
