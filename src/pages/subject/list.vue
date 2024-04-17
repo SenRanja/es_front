@@ -154,15 +154,15 @@ function getData(p = null) {
     }
 
     loading.value = true
-    if (user_role == 'admin') {
-        getSubjectWithGroupList()
-            .then(res => {
-                tableData.value = res.msg.data
-            })
-            .finally(() => {
-                loading.value = false
-            })
-    }else{
+    // if (user_role == 'admin') {
+    //     getSubjectWithGroupList()
+    //         .then(res => {
+    //             tableData.value = res.msg.data
+    //         })
+    //         .finally(() => {
+    //             loading.value = false
+    //         })
+    // }else{
         getNoticeList(currentPage.value)
             .then(res => {
                 tableData.value = res.results
@@ -171,7 +171,7 @@ function getData(p = null) {
             .finally(() => {
                 loading.value = false
             })
-    }
+    // }
 }
 
 getData()
