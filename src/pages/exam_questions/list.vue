@@ -80,7 +80,7 @@
           </div>
         </template>
 
-        <template #default="scope" v-if="store.state.user.role === 'tea'">
+        <template #default="scope" v-if="store.state.user.role === 'tea' || store.state.user.role === 'admin'">
           <el-popconfirm title="下载word试卷" confirmButtonText="确认" cancelButtonText="取消"
             @confirm="downloadFile(scope.row.id)">
             <template #reference>
