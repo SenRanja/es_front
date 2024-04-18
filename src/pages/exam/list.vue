@@ -217,7 +217,7 @@
                 <br>
                 难度
                 <el-select v-model="item.difficulty_level">
-                    <el-option v-for="item in difficulty_levels" :key="item" :label="item" :value="item">
+                    <el-option v-for="item in difficulty_levels" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
                 <!-- <br> -->
@@ -289,7 +289,12 @@ const roles = ref([])
 roles.value = ["模拟", "考试"]
 
 const difficulty_levels = ref([])
-difficulty_levels.value = ['easy', 'middle', 'hard',]
+// difficulty_levels.value = ['easy', 'middle', 'hard',]
+difficulty_levels.value = [
+  { label: '简单', value: 'easy' },
+  { label: '中等', value: 'middle' },
+  { label: '困难', value: 'hard' }
+]
 
 const question_types = ref([])
 question_types.value = ['单选', '多选', '判断', '填空', '简答', '论述']

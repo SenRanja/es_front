@@ -146,7 +146,7 @@
 
         <el-form-item label="身份" prop="role">
           <el-select v-model="form.role" placeholder="选择所属角色">
-            <el-option v-for="item in roles" :key="item" :label="item" :value="item">
+            <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
@@ -184,6 +184,11 @@ const resetSearchForm = () => {
 }
 
 const roles = ref([])
+roles.value = [
+    { label: '学生', value: 'stu' },
+    { label: '教师', value: 'tea' },
+    { label: '管理员', value: 'admin' }
+  ]
 
 const tableData = ref([])
 const loading = ref(false)
@@ -205,7 +210,6 @@ function getData(p = null) {
     .then(res => {
       tableData.value = res.results
       total.value = res.count
-      roles.value = ['stu', 'tea', 'admin',]
     })
     .finally(() => {
       loading.value = false

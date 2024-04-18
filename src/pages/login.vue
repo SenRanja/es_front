@@ -12,8 +12,8 @@
       <div class="">
         <span class="line"></span>
         <span>
-                    账号密码登录
-                </span>
+          账号密码登录
+        </span>
         <span class="line"></span>
       </div>
       <!-- 给form定义名字 ref="formRef"，与js的 const formRef=ref(null)对应 -->
@@ -23,7 +23,7 @@
           <el-input v-model="form.login_name" placeholder="学生号|手机号">
             <template #prefix>
               <el-icon>
-                <User/>
+                <User />
               </el-icon>
             </template>
           </el-input>
@@ -33,7 +33,7 @@
           <el-input v-model="form.password" placeholder="密码" type="password" show-password>
             <template #prefix>
               <el-icon>
-                <Lock/>
+                <Lock />
               </el-icon>
             </template>
           </el-input>
@@ -60,11 +60,11 @@
   @apply bg-light-50 flex items-center justify-center flex-col;
 }
 
-.left > div > div:first-child {
+.left>div>div:first-child {
   @apply font-bold text-5xl text-light-50 mb-4;
 }
 
-.left > div > div:last-child {
+.left>div>div:last-child {
   @apply text-gray-200 text-sm;
 }
 
@@ -72,7 +72,7 @@
   @apply font-bold text-3xl text-gray-800;
 }
 
-.right > div {
+.right>div {
   @apply flex items-center justify-center my-5 text-gray-300 space-x-2;
 }
 
@@ -82,10 +82,10 @@
 </style>
 
 <script setup>
-import {onBeforeUnmount, onMounted, reactive, ref} from 'vue'
-import {toast} from '~/composables/util'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { toast } from '~/composables/util'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { getToken } from "~/composables/auth"
 
 const router = useRouter()
@@ -95,11 +95,11 @@ const store = useStore()
 // import {useStore} from 'vuex'
 // const store = useStore()
 store.dispatch("getSystemSetting")
-    .then((res) => {
-        // console.log(store.state.settings)
-    }).finally((err) => {
-      // console.log(err)
-    })
+  .then((res) => {
+    // console.log(store.state.settings)
+  }).finally((err) => {
+    // console.log(err)
+  })
 
 
 // do not use same name with ref
@@ -140,17 +140,21 @@ const onSubmit = () => {
       loading.value = true
 
       store.dispatch("login", form)
-          .then(() => {
-            const session_id = getToken()
-            if (session_id) {
-              toast("登录成功", "success");
-              router.push("/")
-            }else{
-              toast("登陆失败", "error");
-            }
-          }).finally(() => {
-        loading.value = false
-      })
+        .then(() => {
+          const session_id = getToken()
+          if (session_id) {
+            toast("登录成功", "success");
+            router.push("/")
+          } else {
+            toast("登陆失败", "error");
+          }
+        })
+        .catch(() => {
+          toast("登陆失败", "error");
+        })
+        .finally(() => {
+          loading.value = false
+        })
 
     } else {
       console.log('error submit!!')
