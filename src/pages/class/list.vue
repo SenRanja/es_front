@@ -75,7 +75,7 @@
         </FormDrawer>
 
         <FormDrawer ref="formDrawerRefUser" :title="drawerTitle" @submit="AddNewUser">
-            <el-form :model="formuser" ref="formRefUser" width="80px" :inline="false">
+            <el-form :model="formuser" ref="formRefUser" width.="80px" :inline="false">
                 <el-form-item label="班级用户" prop="groups">
                     <el-select v-model="formuser.users" multiple>
                         <el-option v-for="item in classUserList" :key="item.stu_id" :label="item.name" :value="item.stu_id">

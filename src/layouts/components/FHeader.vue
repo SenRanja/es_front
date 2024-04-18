@@ -43,10 +43,15 @@
             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
 
-          <form-drawer ref="formDrawerRef" title="修改密码" destroyOnClose @submit="onSubmit">
-
+         
+        </template>
+      </el-dropdown>
+    </div>
+    <Dialog v-model="dialogVisible" width="700px" title="修改密码">
+      
             <!-- 修改密码表单 -->
-            <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" size="small">
+            <div class="w-500px mx-auto my-20px">
+            <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" >
               <el-form-item prop="oldpassword" label="旧密码">
                 <el-input v-model="form.oldpassword" placeholder="请输入旧密码">
                   <template #prefix>
@@ -78,19 +83,22 @@
               </el-form-item>
 
             </el-form>
-
-          </form-drawer>
-
-        </template>
-      </el-dropdown>
-    </div>
+        </div>
+      <template #footer>
+        <el-button type="primary"  @click="onSubmit">保存</el-button>
+        <el-button  @click="dialogVisible = false">取消</el-button>
+        <!-- <BaseButton type="primary" @click="formSubmit">{{ t('dialogDemo.submit') }}</BaseButton>
+        <BaseButton @click="dialogVisible2 = false">{{ t('dialogDemo.close') }}</BaseButton> -->
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script setup>
 import FormDrawer from '~/components/FormDrawer.vue'
 import {userLogout, userRepassword} from '~/composables/useManager'
-
+import  Dialog  from '~/components/Dialog.vue'
+import { ref } from 'vue'
 // 全屏，isFullscreen 是否全屏，toggle 切换全屏
 import {useFullscreen} from '@vueuse/core'
 
@@ -101,6 +109,7 @@ const {
   rules,
   formRef,
   onSubmit,
+  dialogVisible,
   openRePasswordForm
 } = userRepassword()
 const {handleLogout} = userLogout()
@@ -111,7 +120,8 @@ const handleCommand = (c) => {
       handleLogout()
       break
     case "rePassword":
-      openRePasswordForm()
+    //   openRePasswordForm()
+    dialogVisible.value =true
       // showDrawer.value = true
       break
   }

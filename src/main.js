@@ -6,6 +6,7 @@ import {router} from './router'
 import store from './store'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'virtual:windi.css'
+import '~/styles/index.less'
 
 import "nprogress/nprogress.css"
 
