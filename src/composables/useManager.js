@@ -12,6 +12,7 @@ export function userRepassword() {
     // 修改密码
     const formDrawerRef = ref(null)
     // const showDrawer = ref(false)
+    const dialogVisible = ref(false)
 
     const form = reactive({
         oldpassword: "",
@@ -52,16 +53,21 @@ export function userRepassword() {
             if (valid) {
                 // console.log('submit!')
                 // loading.value = true
-                formDrawerRef.value.showLoading()
+                // formDrawerRef.value.showLoading()
                 updatePassword(form)
                     .then(res => {
                         toast("修改密码成功，请重新登陆", "success");
+                        dialogVisible.value=false
                         store.dispatch("logout")
-                            .finally(() => location.reload())
-                        router.push("/login")
+                            .finally(() =>  {
+                                setTimeout(() => {
+                                    router.push("/login")
+                                }, 1000);
+                            })
+                       
                     })
                     .finally(() => {
-                        formDrawerRef.value.hideLoading()
+                        // formDrawerRef.value.hideLoading()
                     })
             } else {
                 return false
@@ -77,6 +83,7 @@ export function userRepassword() {
         rules,
         formRef,
         onSubmit,
+        dialogVisible,
         openRePasswordForm
     }
 }

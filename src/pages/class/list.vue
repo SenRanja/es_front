@@ -75,10 +75,10 @@
         </FormDrawer>
 
         <FormDrawer ref="formDrawerRefUser" :title="drawerTitle" @submit="AddNewUser">
-            <el-form :model="formuser" ref="formRefUser" width="80px" :inline="false">
+            <el-form :model="formuser" ref="formRefUser" width.="80px" :inline="false">
                 <el-form-item label="班级用户" prop="groups">
                     <el-select v-model="formuser.users" multiple>
-                        <el-option v-for="item in formuser.users" :key="item.stu_id" :label="item.name" :value="item">
+                        <el-option v-for="item in classUserList" :key="item.stu_id" :label="item.name" :value="item.stu_id">
                         <!-- <el-option v-for="(option, index) in formuser.users" :key="option.stu_id" :label="option.stu_id" :value="option.stu_id">
                             {{ option.name }} -->
                         </el-option>
@@ -138,6 +138,7 @@ const new_stu_input_item = ref("")
 // 获取班级成员名单
 const class_users = ref([])
 
+const classUserList = ref([])
 
 // 获取数据
 function getData(p = null) {
@@ -280,7 +281,8 @@ const changeUser = (row) => {
     formDrawerRefUser.value.open()
     getClassUserList(row.url)
         .then(res => {
-            formuser.users = res.users
+             classUserList.value = res.users
+             formuser.users = res.users.map(user=>user.stu_id)
     })
 
 
