@@ -9,7 +9,9 @@ export default defineConfig({
     resolve: {
         alias: {
             "~": path.resolve(__dirname, "./src"),
-        }
+        },
+        extensions: ['.js', '.mjs', '.vue', '.json', '.less', '.css']
+
     },
 
     server: {
@@ -26,7 +28,14 @@ export default defineConfig({
         //   },
         // }
     },
-
+    css: {
+        preprocessorOptions: {
+          less: {
+            additionalData: '@import "./src/styles/variables.module.less";',
+            javascriptEnabled: true
+          }
+        }
+      },
     plugins: [vue(), WindiCSS()],
 
 })
