@@ -220,7 +220,7 @@ const AddNewUser = () => {
             toast("班级用户更新成功")
             getClassUserList(editId.value)
                 .then(res => {
-                    formuser.users = res.users
+                    formuser.users = res.users.map(user=>user.stu_id)
                 })
         })
 }
