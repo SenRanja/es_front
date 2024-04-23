@@ -1,5 +1,5 @@
 <template>
-     <a href="/static/media/template/试题模板.xlsx" download style="color: blue;">下载模板文件</a>
+     <a href="/static/media/template/question.xlsx" download style="color: blue;">下载模板文件</a>
     <form>
         <input type="file" @change="getFile($event)">
         <button @click.prevent="submitForm">提交</button>

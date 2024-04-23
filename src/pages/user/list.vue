@@ -261,29 +261,35 @@ const rules = {
     message: '不能为空',
     trigger: 'blur'
   }],
-  tel: [{
-    required: true,
-    message: '不能为空',
-    trigger: 'blur'
-  }, {
+  tel: [
+  //   {
+  //   required: true,
+  //   message: '不能为空',
+  //   trigger: 'blur'
+  // }, 
+  {
     pattern: /^[0-9|-]{5,20}$/,
     message: '请输入有效的电话号码',
     trigger: 'blur'
   }],
-  id_card: [{
-    required: true,
-    message: '不能为空',
-    trigger: 'blur'
-  }, {
+  id_card: [
+  //   {
+  //   required: true,
+  //   message: '不能为空',
+  //   trigger: 'blur'
+  // }, 
+  {
     pattern: /^[0-9|x|X]{5,20}$/,
     message: '请输入有效的身份证号码',
     trigger: 'blur'
   }],
-  email: [{
-    required: true,
-    message: '不能为空',
-    trigger: 'blur'
-  }, {
+  email: [
+    // {
+    // required: true,
+    // message: '不能为空',
+    // trigger: 'blur'
+    // }, 
+  {
     pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     message: '请输入有效的邮箱地址',
     trigger: 'blur'
